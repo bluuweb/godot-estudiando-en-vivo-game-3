@@ -1,7 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://csxm3ihk41xo5"]
+[gd_scene load_steps=37 format=3 uid="uid://csxm3ihk41xo5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_762n0"]
 [ext_resource type="Texture2D" uid="uid://i58cqup41ytk" path="res://assets/art/Pixel Adventure 2/Enemies/Chicken/Idle (32x34).png" id="1_wfr7u"]
+[ext_resource type="PackedScene" uid="uid://dn072j6melmed" path="res://scenes/bullet.tscn" id="2_ub0q2"]
 [ext_resource type="Texture2D" uid="uid://bki2qkifwdd0q" path="res://assets/art/Pixel Adventure 2/Enemies/Chicken/Run (32x34).png" id="3_ubipd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_llxdh"]
@@ -208,9 +209,29 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uwwiv"]
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v71vy"]
+bg_color = Color(0.118581, 0.118581, 0.118581, 1)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owvjp"]
+bg_color = Color(0.987617, 0, 0.256937, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fs5vi"]
+radius = 911.044
+
+[node name="Player" type="CharacterBody2D" groups=["player_group"]]
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_762n0")
+bullet_scene = ExtResource("2_ub0q2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vkypv")
@@ -223,3 +244,22 @@ position = Vector2(1, 3)
 shape = SubResource("CircleShape2D_uwwiv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -15.0
+offset_top = 20.0
+offset_right = 14.0
+offset_bottom = 24.0
+theme_override_styles/background = SubResource("StyleBoxFlat_v71vy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_owvjp")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="LimitEnemy" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitEnemy"]
+shape = SubResource("CircleShape2D_fs5vi")
+
+[connection signal="area_exited" from="LimitEnemy" to="." method="_on_limit_enemy_area_exited"]

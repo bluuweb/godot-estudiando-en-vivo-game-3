@@ -98,27 +98,14 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_xk6db"]
 radius = 15.0333
 
-[node name="Enemy" type="Area2D" groups=["enemy_group"]]
-collision_layer = 2
+[node name="Enemy" type="Area2D"]
 script = ExtResource("1_s1a68")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_n61h7")
 animation = &"run_pig"
 autoplay = "run_pig"
-frame_progress = 0.756578
+frame_progress = 0.133215
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xk6db")
-
-[node name="TimerDamage" type="Timer" parent="."]
-wait_time = 0.5
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(218.5, 147)
-scale = Vector2(74.15, 52.3)
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="timeout" from="TimerDamage" to="." method="_on_timer_damage_timeout"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
