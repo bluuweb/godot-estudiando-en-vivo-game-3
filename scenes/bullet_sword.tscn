@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dn072j6melmed"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_8gpnd"]
+[ext_resource type="Texture2D" uid="uid://c44vjcyyoo1jx" path="res://assets/art/kenney_tiny-dungeon/Tiles/tile_0103.png" id="2_onkmj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cyyet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_onkmj")
+}],
+"loop": true,
+"name": &"arm_1",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_04lgy"]
+radius = 8.06226
+
+[node name="Bullet" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_8gpnd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cyyet")
+animation = &"arm_1"
+autoplay = "arm_1"
+frame_progress = 0.0113445
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_04lgy")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -2,6 +2,8 @@ extends Area2D
 
 @export var SPEED := 10
 @export var damage := 1
+@export var life = 100
+
 var player
 #@onready var player: CharacterBody2D = $"../Players/Player"
 
@@ -31,3 +33,8 @@ func _on_timer_damage_timeout() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	print("eliminar enemigo screen_notifier")
 	queue_free()
+	
+func damage_received(value: float):
+	life -= value
+	print("life: ", life)
+	if life <= 0: queue_free()

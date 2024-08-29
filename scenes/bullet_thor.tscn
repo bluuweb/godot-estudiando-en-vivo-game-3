@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://yem81uxfvx06"]
+
+[ext_resource type="Script" path="res://scripts/bullet_thor.gd" id="1_isf0k"]
+[ext_resource type="Texture2D" uid="uid://c7ugkdljgkhp1" path="res://assets/art/kenney_tiny-dungeon/Tiles/tile_0117.png" id="1_vxkes"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yrp2g"]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7lteg"]
+radius = 157.013
+
+[node name="bullet_thor" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_isf0k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vxkes")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_yrp2g")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="EnemyDetected" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetected"]
+shape = SubResource("CircleShape2D_7lteg")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="area_entered" from="EnemyDetected" to="." method="_on_enemy_detected_area_entered"]
